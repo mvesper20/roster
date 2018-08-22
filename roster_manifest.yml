@@ -1,0 +1,19 @@
+---
+applications:
+  -
+    buildpacks:
+      - java_buildpack
+    disk_quota: 1G
+    env:
+      APP_VERSION: blue
+      ROSTER_A: "1"
+      ROSTER_B: "2"
+      ROSTER_C: "3"
+    instances: 1
+    memory: 750M
+    name: roster
+    routes:
+      - route: "roster-mvesper.cfapps.io"
+    services:
+      - "roster-drain-service"
+    stack: cflinuxfs2
