@@ -12,8 +12,6 @@ applications:
     instances: 1
     memory: 750M
     name: roster
-    routes:
-      - route: "roster-mvesper.cfapps.io"
     services:
       - "roster-drain-service"
     stack: cflinuxfs2
