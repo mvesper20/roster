@@ -15,4 +15,5 @@ applications:
     services:
       - "roster-drain-service"
       - "config-server"
+      - "eureka-service"
     stack: cflinuxfs2

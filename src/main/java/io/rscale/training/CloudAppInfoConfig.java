@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile("cloud")
 public class CloudAppInfoConfig {
-	
+
 	@Value("${ROSTER_A:#{null}}")
 	private String rosterA;
 
@@ -33,10 +33,10 @@ public class CloudAppInfoConfig {
 
 	@Value("${APP_VERSION:#{null}}")
 	private String appVersion;
-	
+
 	@Autowired
 	private ApplicationContext appContext;
-		
+
 	public final String APP_ID_KEY = "application_id";
 	public final String APP_NAME_KEY = "application_name";
 	public final String APP_URIS_KEY = "application_uris";
@@ -45,19 +45,19 @@ public class CloudAppInfoConfig {
 	public final String INSTANCE_INDEX_KEY = "instance_index";
 	public final String SPACE_ID_KEY = "space_id";
 	public final String SPACE_NAME_KEY = "space_name";
-	
+
 	private Cloud cloud;
-	
+
 	public CloudAppInfoConfig() {
 		CloudFactory cloudFactory = new CloudFactory();
 		cloud = cloudFactory.getCloud();
 	}
-	
+
 	@Bean
 	public AppInfo appInfo() throws SQLException {
-		
+
 		Map<String,Object> properties = cloud.getApplicationInstanceInfo().getProperties();
-		
+
 		String appId = (String)properties.get(APP_ID_KEY);
 		String appName = (String)properties.get(APP_NAME_KEY);
 		@SuppressWarnings("unchecked")
@@ -70,11 +70,11 @@ public class CloudAppInfoConfig {
 		String database = getDatabaseName();
 		List<String> boundServices = getServices();
 		List<String> profiles = Arrays.asList(appContext.getEnvironment().getActiveProfiles());
-		
-		return new AppInfo(appId, appName, appUris, cfApi, instanceId, instanceIndex, spaceId, spaceName, 
+
+		return new AppInfo(appId, appName, appUris, cfApi, instanceId, instanceIndex, spaceId, spaceName,
 				database, boundServices, profiles, rosterA, rosterB, rosterC, appVersion);
 	}
-	
+
 	public String getDatabaseName() {
 		for( ServiceInfo info : cloud.getServiceInfos(DataSource.class) ) {
 			if ( info.toString().toLowerCase().contains("mysql") ) {
@@ -83,7 +83,7 @@ public class CloudAppInfoConfig {
 		}
 		return "H2";
 	}
-	
+
     private List<String> getServices() {
     	List<String> list = new ArrayList<String>();
     	for ( ServiceInfo info : cloud.getServiceInfos()) {
@@ -91,5 +91,5 @@ public class CloudAppInfoConfig {
     	}
     	return list;
     }
-	
+
 }
