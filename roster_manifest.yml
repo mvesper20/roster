@@ -9,7 +9,7 @@ applications:
       ROSTER_A: "1"
       ROSTER_B: "2"
       ROSTER_C: "3"
-    instances: 1
+    instances: 2
     memory: 750M
     name: roster
     services:
